@@ -1,0 +1,9 @@
+{
+  "name": "job-board-assignment",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "mobile",
+    "shared"
+  ]
+}

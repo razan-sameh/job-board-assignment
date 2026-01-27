@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1",
+    "title": "Frontend Developer",
+    "description": "React/Next.js developer needed for a fast-paced startup.",
+    "location": "Cairo",
+    "salary": 12000,
+    "status": "open",
+    "createdBy": "1"
+  },
+  {
+    "id": "2",
+    "title": "Backend Developer",
+    "description": "NestJS developer needed for building scalable APIs.",
+    "location": "Remote",
+    "salary": 15000,
+    "status": "open",
+    "createdBy": "1"
+  },
+  {
+    "id": "3",
+    "title": "Mobile Developer",
+    "description": "React Native developer needed for cross-platform app.",
+    "location": "Alexandria",
+    "salary": 13000,
+    "status": "closed",
+    "createdBy": "1"
+  }
+]

@@ -1,0 +1,20 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn.lock
+
+# Next.js
+frontend/.next/
+frontend/out/
+
+# Expo
+mobile/.expo/
+mobile/dist/
+
+# Env
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db

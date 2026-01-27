@@ -1,0 +1,14 @@
+[
+  {
+    "id": "1",
+    "fullName": "Admin User",
+    "email": "admin@wtm.com",
+    "role": "admin"
+  },
+  {
+    "id": "2",
+    "fullName": "Job Seeker",
+    "email": "jobseeker@wtm.com",
+    "role": "jobseeker"
+  }
+]
