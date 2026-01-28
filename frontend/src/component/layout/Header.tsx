@@ -5,14 +5,13 @@ import { Briefcase, User, Sun, Moon, LogOut, LogIn } from "lucide-react";
 import Container from "../ui/Container";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useMe, useLogout } from "@jobboard/shared/hooks/useAuth";
 import { useRouter } from "next/navigation";
+import { useLogout, useMe } from "@/lib/hooks/useAuth";
 
 function Header() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const { data } = useMe();
-  const user = data?.user;
+  const { user } = useMe();
   const logoutMutation = useLogout();
   const router = useRouter();
 

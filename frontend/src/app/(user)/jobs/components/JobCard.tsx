@@ -1,7 +1,8 @@
 'use client';
 import Link from "next/link"; // import Link from next
-import { enmJobStatus, typJob } from "@jobboard/shared/types";
 import { MapPin, DollarSign, Briefcase } from "lucide-react";
+import { typJob } from "@/content/types";
+import { enmJobStatus } from "@/content/enums";
 
 export function JobCard({ job, index }: { job: typJob; index: number }) {
   return (
@@ -31,7 +32,7 @@ export function JobCard({ job, index }: { job: typJob; index: number }) {
         <div className="space-y-2 mb-6">
           <div className="flex items-center gap-2 text-content/80">
             <MapPin className="w-4 h-4" />
-            <span className="text-sm font-medium">{job.location}</span>
+            <span className="text-sm font-medium">{job.location.name}</span>
           </div>
           <div className="flex items-center gap-2 text-content/80">
             <DollarSign className="w-4 h-4" />

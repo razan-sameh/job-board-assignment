@@ -7,7 +7,9 @@ import {
   Calendar,
   Building2,
 } from "lucide-react";
-import { enmJobStatus, formatDate, typJob } from "@jobboard/shared/types";
+import { typJob } from "@/content/types";
+import { enmJobStatus } from "@/content/enums";
+import { formatDate } from "@/content/utils";
 
 interface JobDetailsContentProps {
   job: typJob;
@@ -56,7 +58,7 @@ export default function JobDetailsContent({ job }: JobDetailsContentProps) {
             <div className="flex flex-wrap gap-6 mt-6">
               <div className="flex items-center gap-2 text-content">
                 <MapPin className="w-5 h-5 text-blue-600" />
-                <span className="font-medium">{job.location}</span>
+                <span className="font-medium">{job.location.name}</span>
               </div>
               <div className="flex items-center gap-2 text-content">
                 <DollarSign className="w-5 h-5 text-emerald-600" />

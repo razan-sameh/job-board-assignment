@@ -1,14 +1,24 @@
 import { ChevronDown, Check } from "lucide-react";
 import { useState } from "react";
 
+interface Option {
+  label: string;
+  value: string;
+}
+
 interface CustomSelectProps {
-  options: string[];
+  options: Option[];
   value: string;
   onChange: (option: string) => void;
   placeholder: string;
 }
 
-export function CustomSelect({ options, value, onChange, placeholder }: CustomSelectProps) {
+export function CustomSelect({
+  options,
+  value,
+  onChange,
+  placeholder,
+}: CustomSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -17,7 +27,7 @@ export function CustomSelect({ options, value, onChange, placeholder }: CustomSe
         onClick={() => setIsOpen(!isOpen)}
         className="w-full px-6 py-3.5 bg-lightGray/20 border border-lightGray/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent font-medium text-content hover:bg-lightGray/30 transition-colors flex items-center justify-between"
       >
-        <span>{value || placeholder}</span>
+        <span>{options.find((opt) => opt.value === value)?.label || placeholder}</span>
         <ChevronDown className="w-4 h-4 text-content/70" />
       </button>
 
@@ -32,13 +42,13 @@ export function CustomSelect({ options, value, onChange, placeholder }: CustomSe
               <div
                 key={index}
                 onClick={() => {
-                  onChange(option);
+                  onChange(option.value);
                   setIsOpen(false);
                 }}
                 className="px-6 py-3 hover:bg-lightGray/20 transition-colors cursor-pointer flex items-center justify-between text-content font-medium"
               >
-                <span>{option}</span>
-                {value === option && (
+                <span>{option.label}</span>
+                {value === option.value && (
                   <Check className="w-4 h-4 text-indigo-600" />
                 )}
               </div>

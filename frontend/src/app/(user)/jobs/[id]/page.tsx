@@ -7,7 +7,7 @@ import JobDetails from "./component/JobDetails";
 export default async function JobPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: number }>;
 }) {
   const { id } = await params;
 

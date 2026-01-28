@@ -1,53 +1,65 @@
 "use client";
+
 import { Search } from "lucide-react";
 import { CustomSelect } from "./CustomSelect";
 import { useEffect, useState } from "react";
-import { useJobLocations } from "@jobboard/shared/hooks/useJobs";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useJobLocations } from "@/lib/hooks/useJobs";
+import { typLocation } from "@/content/types";
 
 export function JobFilters() {
-  const { data: locations = [] } = useJobLocations();
+  const { data: locations = [] } = useJobLocations(); // typLocation[]
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const [locationFilter, setLocationFilter] = useState(
-    searchParams.get("location") ?? "All Locations",
+  // Location: store the location id (number) or "all"
+  const [locationFilter, setLocationFilter] = useState<string>(
+    searchParams.get("location") ?? "all"
   );
   const [statusFilter, setStatusFilter] = useState(
-    searchParams.get("status") ?? "All Status",
+    searchParams.get("status") ?? "all"
   );
   const [searchQuery, setSearchQuery] = useState(
-    searchParams.get("search") || "",
+    searchParams.get("search") || ""
   );
 
-  const locationOptions = ["All Locations", ...locations];
-  const statusOptions = ["All Status", "open", "closed"];
+  const locationOptions = [
+    { label: "All Locations", value: "all" },
+    ...locations.map((loc: typLocation) => ({
+      label: loc.name,
+      value: loc.id.toString(),
+    })),
+  ];
+
+  const statusOptions = [
+    { label: "All Status", value: "all" },
+    { label: "Open", value: "open" },
+    { label: "Closed", value: "closed" },
+  ];
 
   // Debounced search state
   const [debouncedSearch, setDebouncedSearch] = useState(searchQuery);
-
-  // Update debouncedSearch after 500ms of inactivity
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearch(searchQuery);
-    }, 600); // 600ms debounce
+    }, 600);
 
     return () => clearTimeout(handler);
   }, [searchQuery]);
 
-  // Update URL params when filters or debounced search change
+  // Update URL params
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
 
     // Location
-    if (locationFilter !== "All Locations") {
+    if (locationFilter !== "all") {
       params.set("location", locationFilter);
     } else {
       params.delete("location");
     }
 
     // Status
-    if (statusFilter !== "All Status") {
+    if (statusFilter !== "all") {
       params.set("status", statusFilter);
     } else {
       params.delete("status");

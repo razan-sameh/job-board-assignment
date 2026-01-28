@@ -5,9 +5,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, LoginFormValues } from "./loginSchema";
 import Link from "next/link";
-import { useLogin } from "@jobboard/shared/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { enmRole } from "@jobboard/shared/types";
+import { useLogin } from "@/lib/hooks/useAuth";
+import { enmRole } from "@/content/enums";
 
 export default function LoginPage() {
   const {
@@ -17,25 +17,28 @@ export default function LoginPage() {
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
   });
-  const { mutateAsync, error } = useLogin();
   const router = useRouter();
+  const { mutateAsync, error } = useLogin();
+
 
   const onSubmit = async (data: LoginFormValues) => {
     try {
       const result = await mutateAsync({
-        email: data.email,
+        identifier: data.email,
         password: data.password,
       });
 
-      // Navigate based on role
-      if (result.user.role === enmRole.admin) {
-        router.push("/dashboard");
-      } else {
-        router.push("/jobs");
+      if (result.success && result.user) {
+        if (result.user.role === enmRole.admin) {
+          router.push("/dashboard");
+        } else {
+          router.push("/jobs");
+        }
       }
+
     } catch (err) {
       // Handle error
-      console.log("Login Error:", err);
+      console.error("Login Error:", err);
     }
   };
 
@@ -107,7 +110,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="mt-4 w-full rounded-lg bg-liner-to-r from-indigo-600 to-purple-600 py-2.5 text-sm font-medium text-white hover:opacity-90 transition disabled:opacity-60"
+            className="mt-4 w-full rounded-lg bg-linear-to-r from-indigo-600 to-purple-600 py-2.5 text-sm font-medium text-white hover:opacity-90 transition disabled:opacity-60"
           >
             {isSubmitting ? "Signing in..." : "Sign in"}
           </button>

@@ -1,8 +1,8 @@
 "use client";
-import { useJobsById } from "@jobboard/shared/hooks/useJobs";
+import { useJobsById } from "@/lib/hooks/useJobs";
 import JobDetailsContent from "./JobDetailsContent";
 
-function JobDetails({ jobId }: { jobId: string }) {
+function JobDetails({ jobId }: { jobId: number }) {
   const { data: job } = useJobsById(jobId);
 
   return <JobDetailsContent job={job} />;

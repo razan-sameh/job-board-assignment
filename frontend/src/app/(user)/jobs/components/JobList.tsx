@@ -1,4 +1,4 @@
-import { typJob } from "@jobboard/shared/types";
+import { typJob } from "@/content/types";
 import { JobCard } from "./JobCard";
 
 

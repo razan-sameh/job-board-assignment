@@ -23,7 +23,6 @@ function saveUsersDB() {
   writeToStorage(STORAGE_KEYS.USERS, usersDB);
 }
 
-let sessions: Record<string, typUser> = {};
 
 /* ---------- Auth ---------- */
 export async function register(payload: {
@@ -32,6 +31,10 @@ export async function register(payload: {
   password: string;
 }) {
   await delay(600);
+
+  // تحديث usersDB من localStorage قبل أي عملية
+  const storedUsers = readFromStorage<typUser[]>(STORAGE_KEYS.USERS);
+  if (storedUsers) usersDB = storedUsers;
 
   const exists = usersDB.find((u) => u.email === payload.email);
   if (exists) throw new Error("Email already registered");
@@ -45,16 +48,19 @@ export async function register(payload: {
   };
 
   usersDB.push(newUser);
-  saveUsersDB();
+  saveUsersDB(); // مهم جدًا
 
   const sessionKey = `session-${newUser.id}`;
-  writeToStorage(sessionKey, newUser);
 
   return { user: newUser, sessionKey };
 }
 
 export async function login(payload: { email: string; password: string }) {
   await delay(600);
+
+  // تحديث usersDB من localStorage كل مرة
+  const storedUsers = readFromStorage<typUser[]>(STORAGE_KEYS.USERS);
+  if (storedUsers) usersDB = storedUsers;
 
   const user = usersDB.find(
     (u) => u.email === payload.email && u.password === payload.password,
@@ -63,8 +69,8 @@ export async function login(payload: { email: string; password: string }) {
   if (!user) throw new Error("Invalid email or password");
 
   const sessionKey = `session-${user.id}`;
-  writeToStorage(sessionKey, user);
 
+  // ما نكتبش في localStorage للـ session هنا
   return { user, sessionKey };
 }
 

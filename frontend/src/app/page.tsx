@@ -1,4 +1,4 @@
-import { enmRole } from "@jobboard/shared/types";
+import { enmRole } from "@/content/enums";
 
 export default function Home() {
   return (
