@@ -33,10 +33,10 @@ export default function JobDetailsContent({ job }: JobDetailsContentProps) {
           <div className="p-10">
             <div className="flex items-start justify-between mb-6">
               <div className="flex-1">
-                <h1 className="text-4xl font-bold text-slate-900 mb-3 tracking-tight">
+                <h1 className="text-4xl font-bold mb-3 tracking-tight">
                   {job.title}
                 </h1>
-                <div className="flex items-center gap-2 text-lg text-slate-600">
+                <div className="flex items-center gap-2 text-lg text-content">
                   <Building2 className="w-5 h-5" />
                   <span className="font-medium">{job.company}</span>
                 </div>
@@ -54,15 +54,15 @@ export default function JobDetailsContent({ job }: JobDetailsContentProps) {
 
             {/* Meta information */}
             <div className="flex flex-wrap gap-6 mt-6">
-              <div className="flex items-center gap-2 text-slate-600">
+              <div className="flex items-center gap-2 text-content">
                 <MapPin className="w-5 h-5 text-blue-600" />
                 <span className="font-medium">{job.location}</span>
               </div>
-              <div className="flex items-center gap-2 text-slate-600">
+              <div className="flex items-center gap-2 text-content">
                 <DollarSign className="w-5 h-5 text-emerald-600" />
                 <span className="font-medium">{job.salary}</span>
               </div>
-              <div className="flex items-center gap-2 text-slate-600">
+              <div className="flex items-center gap-2 text-content">
                 <Calendar className="w-5 h-5 text-indigo-600" />
                 <span className="font-medium">{formatDate(job.createdAt)}</span>
               </div>
@@ -73,10 +73,8 @@ export default function JobDetailsContent({ job }: JobDetailsContentProps) {
           <div className="p-10 pt-5">
             {/* Introduction */}
             <div>
-              <h2 className="text-xl font-bold text-slate-900 mb-4">
-                Job Description:
-              </h2>
-              <p className="text-lg text-slate-700 leading-relaxed">
+              <h2 className="text-xl font-bold mb-4">Job Description:</h2>
+              <p className="text-lg text-content leading-relaxed">
                 {job.description}
               </p>
             </div>
@@ -84,8 +82,8 @@ export default function JobDetailsContent({ job }: JobDetailsContentProps) {
 
           {/* Apply button */}
           {isOpen && (
-            <div className="p-10">
-              <button className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl">
+            <div className="p-10 b-t border-t border-lightGray/50">
+              <button className="bg-primary hover:bg-primary/90 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl">
                 Apply for this Job
               </button>
             </div>

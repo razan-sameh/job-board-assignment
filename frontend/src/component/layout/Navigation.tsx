@@ -16,7 +16,7 @@ function Navigation() {
           className={`px-6 py-2.5 rounded-xl font-semibold  flex items-center gap-2 transition-all duration-300 ${
             pathname === "/jobs"
               ? "bg-primary text-white border border-primary"
-              : "bg-white text-content hover:bg-lightGray/20 border border-lightGray"
+              : "bg-background text-content hover:bg-lightGray/20 border border-lightGray"
           }`}
         >
           <Briefcase className="w-4 h-4" />
@@ -29,7 +29,7 @@ function Navigation() {
           className={`px-6 py-2.5 rounded-xl font-semibold flex items-center gap-2 transition-all duration-300 ${
             pathname === "/applications"
               ? "bg-primary text-white  border border-primary"
-              : "bg-white text-content hover:bg-lightGray/20 border border-lightGray"
+              : "bg-background text-content hover:bg-background/20 border border-lightGray"
           }`}
         >
           <FileText className="w-4 h-4" />

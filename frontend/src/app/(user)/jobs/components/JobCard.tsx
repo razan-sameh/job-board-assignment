@@ -13,7 +13,7 @@ export function JobCard({ job, index }: { job: typJob; index: number }) {
         <div className="flex items-start justify-between mb-4">
           <h3 className="text-lg font-bold ">{job.title}</h3>
           <span
-            className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider flex-shrink-0 ${
+            className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
               job.status === enmJobStatus.open
                 ? "bg-emerald-100 text-emerald-700"
                 : "bg-slate-100 text-slate-600"
