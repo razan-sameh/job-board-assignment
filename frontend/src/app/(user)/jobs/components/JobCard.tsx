@@ -1,4 +1,5 @@
 'use client';
+import Link from "next/link"; // import Link from next
 import { enmJobStatus, typJob } from "@jobboard/shared/types";
 import { MapPin, DollarSign, Briefcase } from "lucide-react";
 
@@ -38,9 +39,13 @@ export function JobCard({ job, index }: { job: typJob; index: number }) {
           </div>
         </div>
 
-        <button className="w-full py-3 bg-lightGray/20 rounded-xl border border-lightGray/20 font-semibold hover:bg-lightGray/30 transition-all duration-300">
+        {/* Replace button with Link */}
+        <Link
+          href={`/jobs/${job.id}`} // replace with your job detail route
+          className="block text-center w-full py-3 bg-lightGray/20 rounded-xl border border-lightGray/20 font-semibold hover:bg-lightGray/30 transition-all duration-300"
+        >
           View Details
-        </button>
+        </Link>
       </div>
     </div>
   );

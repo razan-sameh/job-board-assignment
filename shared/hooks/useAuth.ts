@@ -32,6 +32,7 @@ export function useMe() {
       return me(sessionKey);
     },
     retry: false,
+    staleTime: Infinity,
   });
 }
 

@@ -17,6 +17,7 @@ export type typJob = {
   status: enmJobStatus;
   createdBy: string;
   company: string;
+  createdAt: string;
 };
 
 export type typApplication = {

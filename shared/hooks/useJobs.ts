@@ -15,9 +15,10 @@ import {
 
 export function useJobs(params?: any) {
   return useSuspenseQuery({
-    queryKey: ["jobs",params],
+    queryKey: ["jobs", params],
     queryFn: () => listJobs(params),
     retry: 1, // 👈 Avoid infinite retry loops
+    staleTime: Infinity,
   });
 }
 
@@ -26,6 +27,7 @@ export function useJobLocations() {
     queryKey: ["job-locations"],
     queryFn: listJobLocations,
     retry: 1, // 👈 Avoid infinite retry loops
+    staleTime: Infinity,
   });
 }
 
@@ -34,6 +36,7 @@ export function useJobsById(id: string) {
     queryKey: ["job", id],
     queryFn: () => getJob(id), // filters: specialOffer only
     retry: 1, // 👈 Avoid infinite retry loops
+    staleTime: Infinity,
   });
 }
 
@@ -43,6 +46,7 @@ export function useCreateJob() {
     mutationFn: createJob,
     onSuccess: async (data) => {
       await qc.invalidateQueries({ queryKey: ["jobs"] });
+      await qc.invalidateQueries({ queryKey: ["job-locations"] });
     },
   });
 }
@@ -53,6 +57,7 @@ export function useUpdateJob() {
     mutationFn: ({ id, payload }: any) => updateJob(id, payload),
     onSuccess: async (data) => {
       await qc.invalidateQueries({ queryKey: ["jobs"] });
+      await qc.invalidateQueries({ queryKey: ["job-locations"] });
     },
   });
 }
@@ -63,6 +68,7 @@ export function useDeleteJob() {
     mutationFn: deleteJob,
     onSuccess: async (data) => {
       await qc.invalidateQueries({ queryKey: ["jobs"] });
+      await qc.invalidateQueries({ queryKey: ["job-locations"] });
     },
   });
 }
