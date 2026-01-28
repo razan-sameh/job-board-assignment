@@ -1,31 +1,68 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { listJobs, getJob, createJob, updateJob, deleteJob } from "../api/jobApi";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+import {
+  listJobs,
+  getJob,
+  createJob,
+  updateJob,
+  deleteJob,
+  listJobLocations,
+} from "../api/jobApi";
 
 export function useJobs(params?: any) {
-  return useQuery(["jobs", params], () => listJobs(params));
+  return useSuspenseQuery({
+    queryKey: ["jobs",params],
+    queryFn: () => listJobs(params),
+    retry: 1, // 👈 Avoid infinite retry loops
+  });
 }
 
-export function useJob(id: string) {
-  return useQuery(["job", id], () => getJob(id));
+export function useJobLocations() {
+  return useSuspenseQuery({
+    queryKey: ["job-locations"],
+    queryFn: listJobLocations,
+    retry: 1, // 👈 Avoid infinite retry loops
+  });
+}
+
+export function useJobsById(id: string) {
+  return useSuspenseQuery({
+    queryKey: ["job", id],
+    queryFn: () => getJob(id), // filters: specialOffer only
+    retry: 1, // 👈 Avoid infinite retry loops
+  });
 }
 
 export function useCreateJob() {
   const qc = useQueryClient();
-  return useMutation(createJob, {
-    onSuccess: () => qc.invalidateQueries(["jobs"]),
+  return useMutation({
+    mutationFn: createJob,
+    onSuccess: async (data) => {
+      await qc.invalidateQueries({ queryKey: ["jobs"] });
+    },
   });
 }
 
 export function useUpdateJob() {
   const qc = useQueryClient();
-  return useMutation(({ id, payload }: any) => updateJob(id, payload), {
-    onSuccess: () => qc.invalidateQueries(["jobs"]),
+  return useMutation({
+    mutationFn: ({ id, payload }: any) => updateJob(id, payload),
+    onSuccess: async (data) => {
+      await qc.invalidateQueries({ queryKey: ["jobs"] });
+    },
   });
 }
 
 export function useDeleteJob() {
   const qc = useQueryClient();
-  return useMutation(deleteJob, {
-    onSuccess: () => qc.invalidateQueries(["jobs"]),
+  return useMutation({
+    mutationFn: deleteJob,
+    onSuccess: async (data) => {
+      await qc.invalidateQueries({ queryKey: ["jobs"] });
+    },
   });
 }

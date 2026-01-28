@@ -1,9 +1,21 @@
 import applicationsData from "../mock/applications.json";
-import { enmApplicationStatus } from "../types/enum";
+import { enmApplicationStatus } from "../types/enums";
 import { typApplication } from "../types/types";
-import { delay } from "../types/utils";
+import { delay, readFromStorage, STORAGE_KEYS, writeToStorage } from "../types/utils";
 
-let applicationsDB: typApplication[] = [...applicationsData];
+let applicationsDB: typApplication[] = [];
+
+function initApplicationsDB() {
+  const stored = readFromStorage<typApplication[]>(STORAGE_KEYS.APPLICATIONS);
+  applicationsDB = stored ? stored : [...applicationsData];
+}
+
+initApplicationsDB();
+
+function saveApplicationsDB() {
+  writeToStorage(STORAGE_KEYS.APPLICATIONS, applicationsDB);
+}
+
 export async function apply(payload: {
   jobId: string;
   userId: string;
@@ -19,6 +31,8 @@ export async function apply(payload: {
   };
 
   applicationsDB.push(app);
+  saveApplicationsDB(); // 🔥 حفظ
+
   return app;
 }
 

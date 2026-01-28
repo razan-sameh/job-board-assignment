@@ -3,12 +3,14 @@
     "id": "1",
     "fullName": "Admin User",
     "email": "admin@wtm.com",
+    "password" : "admin123",
     "role": "admin"
   },
   {
     "id": "2",
     "fullName": "Job Seeker",
     "email": "jobseeker@wtm.com",
+    "password" : "jobseeker123",
     "role": "jobseeker"
   }
 ]

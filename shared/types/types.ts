@@ -4,6 +4,7 @@ export type typUser = {
   id: string;
   fullName: string;
   email: string;
+  password: string;
   role: enmRole;
 };
 
@@ -15,6 +16,7 @@ export type typJob = {
   salary: number;
   status: enmJobStatus;
   createdBy: string;
+  company: string;
 };
 
 export type typApplication = {

@@ -6,7 +6,8 @@
     "location": "Cairo",
     "salary": 12000,
     "status": "open",
-    "createdBy": "1"
+    "createdBy": "1",
+    "company": "Tech Solutions"
   },
   {
     "id": "2",
@@ -15,7 +16,8 @@
     "location": "Remote",
     "salary": 15000,
     "status": "open",
-    "createdBy": "1"
+    "createdBy": "1",
+    "company": "Innovatech"
   },
   {
     "id": "3",
@@ -24,6 +26,7 @@
     "location": "Alexandria",
     "salary": 13000,
     "status": "closed",
-    "createdBy": "1"
+    "createdBy": "1",
+    "company": "AppWorks"
   }
 ]
