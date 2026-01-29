@@ -1,4 +1,4 @@
-import { typUser } from "@/content/types";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { notFound } from "next/navigation";
 interface LoginCredentials {
   identifier: string;

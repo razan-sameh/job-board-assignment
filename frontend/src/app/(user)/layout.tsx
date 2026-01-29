@@ -1,4 +1,3 @@
-import Header from "@/component/layout/Header";
 import "../globals.css";
 import Navigation from "@/component/layout/Navigation";
 import Container from "@/component/ui/Container";
@@ -10,7 +9,6 @@ export default async function userLayout({
 }) {
   return (
     <>
-      <Header />
       <Navigation />
       <Container>{children}</Container>
     </>

@@ -28,9 +28,11 @@ export type typJob = {
 
 export type typApplication = {
   id: string;
-  jobId: string;
-  userId: string;
+  job: typJob;
+  user: typUser;
   resumeText: string;
   coverLetter: string;
   status: enmApplicationStatus;
+  createdAt: string;
+  updatedAt: string;
 };

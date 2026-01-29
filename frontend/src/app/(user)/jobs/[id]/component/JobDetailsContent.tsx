@@ -10,6 +10,7 @@ import {
 import { typJob } from "@/content/types";
 import { enmJobStatus } from "@/content/enums";
 import { formatDate } from "@/content/utils";
+import { useHasApplied } from "@/lib/hooks/useApplications";
 
 interface JobDetailsContentProps {
   job: typJob;
@@ -17,6 +18,8 @@ interface JobDetailsContentProps {
 
 export default function JobDetailsContent({ job }: JobDetailsContentProps) {
   const isOpen = job.status === enmJobStatus.open;
+  const { data: applied, isLoading } = useHasApplied(job.id);
+
   return (
     <div className="min-h-screen">
       <div className="max-w-4xl mx-auto px-6 py-12 relative z-10">
@@ -85,9 +88,27 @@ export default function JobDetailsContent({ job }: JobDetailsContentProps) {
           {/* Apply button */}
           {isOpen && (
             <div className="p-10 b-t border-t border-lightGray/50">
-              <button className="bg-primary hover:bg-primary/90 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl">
-                Apply for this Job
-              </button>
+              {isLoading ? (
+                <button
+                  disabled
+                  className="bg-gray-300 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-200 shadow-lg"
+                >
+                  Checking...
+                </button>
+              ) : applied ? (
+                <div
+                  className=" font-semibold py-4 px-8 cursor-not-allowed"
+                >
+                  Already Applied
+                </div>
+              ) : (
+                <Link
+                  href={`/jobs/${job.id}/apply`}
+                  className="bg-primary hover:bg-primary/90 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl"
+                >
+                  Apply for this Job
+                </Link>
+              )}
             </div>
           )}
         </div>
