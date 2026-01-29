@@ -12,6 +12,15 @@ body {
   --color-secondary: #4f39f6;
   --color-primary: #101828;
   --color-success: #1fc16b;
+  --bg-from: #f8fafc;
+  --bg-via: rgba(168, 85, 247, 0.08);
+  --bg-to: #eff6ff;
+  --blob-purple: rgba(168, 85, 247, 0.35);
+  --blob-blue: rgba(59, 130, 246, 0.35);
+  --blob-indigo: rgba(99, 102, 241, 0.35);
+    --blob-purple: #a855f759;
+  --blob-blue: #3b82f659;
+  --blob-indigo: #6366f159;
 }
 
 .dark {
@@ -23,6 +32,12 @@ body {
   --color-secondary: #4f39f6;
   --color-primary: #101828;
   --color-success: #1fc16b;
+  --bg-from: #020617;
+  --bg-via: rgba(168, 85, 247, 0.15);
+  --bg-to: #020617;
+  --blob-purple: #a855f72e;
+  --blob-blue: #60a5fa2e;
+  --blob-indigo: #818cf82e;
 }
 
 button {
