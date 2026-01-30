@@ -12,20 +12,19 @@ const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {
   const { user } = useMe();
-console.log({user});
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
         {!user ? (
           <>
-            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />
           </>
         ) : user.role === enmRole.admin ? (
-          <Stack.Screen name="Admin" component={AdminNavigator} />
+          <Stack.Screen options={{headerShown: false}} name="Admin" component={AdminNavigator} />
         ) : (
-          <Stack.Screen name="JobSeeker" component={JobSeekerNavigator} />
+          <Stack.Screen options={{headerShown: false}} name="JobSeeker" component={JobSeekerNavigator} />
         )}
       </Stack.Navigator>
     </NavigationContainer>

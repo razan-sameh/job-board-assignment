@@ -20,7 +20,7 @@ import { RegisterFormData, registerSchema } from "./registerSchema";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 export default function RegisterScreen() {
-  const theme = useTheme();
+  const {theme} = useTheme();
   const styles = createStyles(theme);
   const { mutateAsync, error } = useRegister();
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();

@@ -20,7 +20,7 @@ import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 export default function LoginScreen() {
-  const theme = useTheme();
+  const {theme} = useTheme();
   const styles = createStyles(theme);
   const { mutateAsync, error } = useLogin();
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();

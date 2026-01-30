@@ -87,7 +87,7 @@ export const createStyles = (theme: typeof LightTheme) =>
     },
 
     primaryButton: {
-      backgroundColor: theme.primary,
+      backgroundColor: theme.button,
       borderRadius: 12,
       paddingVertical: 16,
       alignItems: 'center',
@@ -111,7 +111,7 @@ export const createStyles = (theme: typeof LightTheme) =>
     },
     signupLink: {
       fontSize: 14,
-      color: theme.primary,
+      color: theme.text,
       fontWeight: '500',
     },
   });
