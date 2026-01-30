@@ -25,7 +25,7 @@ export function JobFilters() {
 
   const locationOptions = [
     { label: "All Locations", value: "all" },
-    ...locations.map((loc: typLocation) => ({
+    ...(locations! || []).map((loc: typLocation) => ({
       label: loc.name,
       value: loc.id.toString(),
     })),
