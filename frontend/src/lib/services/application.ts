@@ -142,7 +142,7 @@ export async function updateApplicationStatus(
   status: string,
 ) {
   const res = await fetch(`/api/applications/${applicationId}/status`, {
-    method: "PATCH",
+    method: "PUT",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
     body: JSON.stringify({ status }),

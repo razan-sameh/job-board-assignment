@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServer } from "@/app/api/supabaseServer";
 
-export async function PATCH(
+export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
