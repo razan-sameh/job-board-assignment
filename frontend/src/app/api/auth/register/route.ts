@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { enmRole } from "@/content/enums";
 import { createServer } from "../../supabaseServer";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -12,7 +13,7 @@ export async function POST(req: NextRequest) {
       options: {
         data: {
           display_name: username,
-          role: "jobseeker",
+          role: enmRole.jobseeker,
         },
       },
     });

@@ -1,11 +1,20 @@
-const { getDefaultConfig } = require("expo/metro-config");
+const { getDefaultConfig } = require('expo/metro-config');
+const path = require('path');
 
 const config = getDefaultConfig(__dirname);
 
-config.resolver.extraNodeModules = {
-  "@jobboard/shared": __dirname + "/../shared"
-};
+// Only watch the mobile/src folder
+config.watchFolders = [path.resolve(__dirname, 'src')];
 
-config.watchFolders = [__dirname + "/../shared"];
+// Map "src/*" imports to ./src
+config.resolver = {
+  ...config.resolver,
+  extraNodeModules: new Proxy(
+    {},
+    {
+      get: (target, name) => path.join(__dirname, 'src', name),
+    }
+  ),
+};
 
 module.exports = config;
