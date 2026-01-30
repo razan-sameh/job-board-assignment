@@ -69,16 +69,27 @@ Password: 12345678
    ```bash
    git clone <repo_url>
    cd job-board-assignment/frontend
-2. Install dependencies: npm install
+2. Install dependencies:
+   ```bash
+   npm install
 3. Create .env and add your Supabase credentials:
-
-NEXT_PUBLIC_SUPABASE_KEY=sb_publishable_mdMFjfXu8QXyzVKZ4QXv2w_tnf_7mmn
-NEXT_PUBLIC_SUPABASE_API=https://wxnradqtzkqzsxtuufbj.supabase.co
-5. Run the development server:npm run dev
+   ```bash
+   NEXT_PUBLIC_SUPABASE_KEY=sb_publishable_mdMFjfXu8QXyzVKZ4QXv2w_tnf_7mmn
+   NEXT_PUBLIC_SUPABASE_API=https://wxnradqtzkqzsxtuufbj.supabase.co
+4. Run the development server:
+   ```bash
+   npm run dev
 
 ### Mobile App (Expo)
-1. Navigate to the mobile folder: cd job-board-assignment/mobile
-2. Install dependencies:npm install
-3. Run the app with Expo:npx expo start -c
+1. Navigate to the mobile folder:
+   ```bash
+   cd job-board-assignment/mobile
+2. Install dependencies:
+   ```bash
+   npm install
+
+3. Run the app with Expo:
+   ```bash
+   npx expo start -c
 
 **Note:** Make sure to configure Supabase keys in the mobile app .env file.
