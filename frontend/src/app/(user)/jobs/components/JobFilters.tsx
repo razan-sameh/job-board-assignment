@@ -14,13 +14,13 @@ export function JobFilters() {
 
   // Location: store the location id (number) or "all"
   const [locationFilter, setLocationFilter] = useState<string>(
-    searchParams.get("location") ?? "all"
+    searchParams.get("location") ?? "all",
   );
   const [statusFilter, setStatusFilter] = useState(
-    searchParams.get("status") ?? "all"
+    searchParams.get("status") ?? "all",
   );
   const [searchQuery, setSearchQuery] = useState(
-    searchParams.get("search") || ""
+    searchParams.get("search") || "",
   );
 
   const locationOptions = [
@@ -88,20 +88,22 @@ export function JobFilters() {
             className="w-full pl-12 pr-4 py-3.5 bg-lightGray/20 border border-lightGray/20 rounded-xl"
           />
         </div>
-
-        <CustomSelect
-          options={locationOptions}
-          value={locationFilter}
-          onChange={setLocationFilter}
-          placeholder="Select Location"
-        />
-
-        <CustomSelect
-          options={statusOptions}
-          value={statusFilter}
-          onChange={setStatusFilter}
-          placeholder="Select Status"
-        />
+        <div className="flex-1">
+          <CustomSelect
+            options={locationOptions}
+            value={locationFilter}
+            onChange={setLocationFilter}
+            placeholder="Select Location"
+          />
+        </div>
+        <div className="flex-1">
+          <CustomSelect
+            options={statusOptions}
+            value={statusFilter}
+            onChange={setStatusFilter}
+            placeholder="Select Status"
+          />
+        </div>
       </div>
     </div>
   );

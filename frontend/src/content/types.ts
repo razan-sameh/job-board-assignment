@@ -4,8 +4,8 @@ export type typUser = {
   id: string;
   fullName: string;
   email: string;
-  password: string;
-  role: enmRole;
+  password?: string;
+  role?: enmRole;
 };
 
 export type typLocation = {

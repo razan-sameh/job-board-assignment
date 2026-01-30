@@ -32,7 +32,7 @@ function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-lightGray bg-background">
+    <header className="sticky top-0 z-50 border-b border-lightGray/50 bg-background">
       <Container>
         <div className="flex items-center justify-between h-16">
           {/* Logo */}

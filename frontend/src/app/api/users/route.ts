@@ -1,23 +1,5 @@
-// app/api/cart/items/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { createServer } from "../supabaseServer";
-
-export async function POST(req: NextRequest) {
-  const supabase = await createServer();
-  const { jobId, resumeLink, coverLetter } = await req.json();
-  const { data, error } = await supabase.rpc("create_application", {
-    p_job_id: jobId,
-    p_resume_link: resumeLink,
-    p_cover_letter: coverLetter,
-  });
-
-  if (error) {
-    console.error(error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-
-  return NextResponse.json({ data });
-}
+import { createServer } from "@/app/api/supabaseServer";
 
 export async function GET(req: NextRequest) {
   try {
@@ -26,15 +8,13 @@ export async function GET(req: NextRequest) {
     // Read query params
     const page = Number(url.searchParams.get("page") || 1);
     const pageSize = Number(url.searchParams.get("pageSize") || 10);
-    const isRecentJobs = url.searchParams.get("isRecentJobs") === "true";
 
     const supabase = await createServer();
 
     // Call the RPC function
-    const { data, error } = await supabase.rpc("get_all_applications_paginated", {
+    const { data, error } = await supabase.rpc("get_all_users_paginated", {
       p_page: page,
       p_page_size: pageSize,
-      p_recent: isRecentJobs,
     });
 
     if (error) {

@@ -29,7 +29,7 @@ export default function LoginPage() {
       });
 
       if (result.success && result.user) {
-        if (result.user.role === enmRole.admin) {
+        if (result.user.user_metadata.role === enmRole.admin) {
           router.push("/dashboard");
         } else {
           router.push("/jobs");

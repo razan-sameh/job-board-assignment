@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import supabase from "../supabase";
-import { typJob } from "@/content/types";
+import { typJob, typLocation } from "@/content/types";
 
 export async function fetchJobs(
   page: number,
@@ -8,6 +8,7 @@ export async function fetchJobs(
   locationId?: number,
   status?: string,
   search?: string,
+  isRecentJobs?: boolean,
 ) {
   const { data, error } = await supabase.rpc("fetch_jobs_paginated", {
     p_page: page,
@@ -15,6 +16,7 @@ export async function fetchJobs(
     p_location_id: locationId ?? null,
     p_status: status ?? null,
     p_search: search ?? null,
+    p_recent: isRecentJobs ?? false,
   });
 
   if (error) {
@@ -51,7 +53,7 @@ export async function fetchJobById(jobId: number): Promise<typJob | null> {
     createdBy: data.created_by,
   };
 }
-export async function fetchLocations() {
+export async function fetchLocations(): Promise<typLocation[] | null> {
   const { data, error } = await supabase.rpc("get_locations");
 
   if (error) {
@@ -65,6 +67,23 @@ export async function fetchLocations() {
 
   return data;
 }
+export async function createApplication(
+  jobId: number,
+  resumeLink: string,
+  coverLetter: string,
+) {
+  const res = await fetch("/api/applications", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({
+      jobId: jobId,
+      resumeLink: resumeLink,
+      coverLetter: coverLetter,
+    }),
+  });
+  if (!res.ok) throw new Error("Failed to add to cart");
+}
 export async function createJob(
   title: string,
   description: string,
@@ -72,59 +91,63 @@ export async function createJob(
   salary: number,
   status: string,
   locationId: number,
-  createdBy: number,
 ) {
-  const { data, error } = await supabase.rpc("create_job", {
-    p_title: title,
-    p_description: description,
-    p_company: company,
-    p_salary: salary,
-    p_status: status,
-    p_location_id: locationId,
-    p_created_by: createdBy,
+  const res = await fetch("/api/jobs", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({
+      title: title,
+      description: description,
+      company: company,
+      salary: salary,
+      locationId: locationId,
+      jobStatus: status,
+    }),
   });
-  if (error) {
-    console.error(error);
-    return null;
-  }
-
-  if (!data) {
-    notFound();
-  }
-
-  return data;
+  if (!res.ok) throw new Error("Failed to add to cart");
+  const data = await res.json();
+  return data?.data;
 }
-export async function updateJob(id: number, salary: number, status: string) {
-  const { data, error } = await supabase.rpc("update_job", {
-    p_job_id: id,
-    p_salary: salary,
-    p_status: status,
+
+export async function updateJob(
+  id: number,
+  title?: string,
+  description?: string,
+  company?: string,
+  salary?: number,
+  status?: string,
+  locationId?: number,
+) {
+  const res = await fetch(`/api/jobs/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({
+      salary,
+      status,
+      title,
+      description,
+      company,
+      locationId,
+    }),
   });
 
-  if (error) {
-    console.error(error);
-    return null;
-  }
+  if (!res.ok) throw new Error("Failed to update job");
 
-  if (!data) {
-    notFound();
-  }
-
-  return data;
+  const data = await res.json();
+  return data?.data; // return the updated job JSON
 }
+
 export async function deleteJob(id: number) {
-  const { data, error } = await supabase.rpc("delete_job", {
-    p_job_id: id,
+  const res = await fetch(`/api/jobs/${id}`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
   });
 
-  if (error) {
-    console.error(error);
-    return null;
-  }
+  if (!res.ok) throw new Error("Failed to update job");
 
-  if (!data) {
-    notFound();
-  }
-
-  return data;
+  const data = await res.json();
+  return data?.data;
 }

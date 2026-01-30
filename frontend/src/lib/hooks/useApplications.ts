@@ -1,26 +1,54 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  useSuspenseQuery,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   createApplication,
+  fetchApplicationById,
+  fetchApplications,
   fetchMyApplications,
   hasApplied,
   updateApplicationStatus,
 } from "../services/application";
 
-export function useMyApplications() {
+export function useMyApplications(
+  params: {
+    page?: number;
+    pageSize?: number;
+    isRecentApplications?: boolean;
+  } = {},
+) {
+  const { page = 1, pageSize = 10, isRecentApplications } = params;
   return useQuery({
-    queryKey: ["applications"],
-    queryFn: () => fetchMyApplications(),
+    queryKey: ["my-applications", page, pageSize, isRecentApplications],
+    queryFn: () => fetchMyApplications(page, pageSize, isRecentApplications),
     retry: 1,
     staleTime: Infinity,
   });
 }
 
+export function useApplications(
+  params: {
+    page?: number;
+    pageSize?: number;
+    isRecentApplications?: boolean;
+  } = {},
+) {
+  const { page = 1, pageSize = 10, isRecentApplications } = params;
+  return useQuery({
+    queryKey: ["applications", page, pageSize, isRecentApplications],
+    queryFn: () => fetchApplications(page, pageSize, isRecentApplications),
+    retry: 1,
+    staleTime: Infinity,
+  });
+}
+
+export function useApplicationById(applicationId: number) {
+  return useQuery({
+    queryKey: ["application", applicationId],
+    queryFn: () => fetchApplicationById(applicationId),
+    staleTime: Infinity,
+    retry: 1,
+  });
+}
 export function useHasApplied(jobId?: number) {
   return useQuery({
     queryKey: ["has-applied", jobId],
@@ -43,6 +71,7 @@ export function useCreateApplication() {
       createApplication(payload.jobId, payload.resumeLink, payload.coverLetter),
     onSuccess: async () => {
       await qc.invalidateQueries({ queryKey: ["applications"] });
+      await qc.invalidateQueries({ queryKey: ["dashboard-stats"] });
     },
   });
 }
