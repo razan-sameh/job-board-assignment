@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { typApplication } from "@/content/types";
-import { notFound } from "next/navigation";
 
 export async function fetchMyApplications(
   page: number,
@@ -135,28 +134,4 @@ export async function createApplication(
     }),
   });
   if (!res.ok) throw new Error("Failed to add to cart");
-}
-
-export async function updateApplicationStatus(
-  applicationId: number,
-  status: string,
-) {
-  const res = await fetch(`/api/applications/${applicationId}/status`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify({ status }),
-  });
-
-  if (res.status === 404) {
-    notFound();
-  }
-
-  if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.error || "Failed to update application");
-  }
-
-  const { data } = await res.json();
-  return data;
 }

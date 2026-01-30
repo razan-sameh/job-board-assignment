@@ -6,7 +6,6 @@ import {
   fetchApplications,
   fetchMyApplications,
   hasApplied,
-  updateApplicationStatus,
 } from "../services/application";
 
 export function useMyApplications(
@@ -72,18 +71,6 @@ export function useCreateApplication() {
     onSuccess: async () => {
       await qc.invalidateQueries({ queryKey: ["applications"] });
       await qc.invalidateQueries({ queryKey: ["dashboard-stats"] });
-    },
-  });
-}
-
-export function useUpdateApplicationStatus() {
-  const qc = useQueryClient();
-
-  return useMutation({
-    mutationFn: (payload: { applicationId: number; status: string }) =>
-      updateApplicationStatus(payload.applicationId, payload.status),
-    onSuccess: async () => {
-      await qc.invalidateQueries({ queryKey: ["applications"] });
     },
   });
 }
