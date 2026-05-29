@@ -1,4 +1,4 @@
-# Job Board Platform - WeTheMakers LLC Assignment
+# Job Board Platform
 
 ## Project Overview
 
