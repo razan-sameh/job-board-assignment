@@ -3,8 +3,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, LoginFormValues } from "./loginSchema";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useLogin } from "@/lib/hooks/useAuth";
+import { useAuthRoleFromUrl } from "@/lib/hooks/useAuthRoleFromUrl";
 import { enmRole } from "@/content/enums";
 import { useState } from "react";
 import AuthRoleTabs from "@/component/auth/AuthRoleTabs";
@@ -15,13 +16,7 @@ import {
 } from "@/content/demoAccounts";
 
 function LoginForm() {
-  const searchParams = useSearchParams();
-  const initialRole: AuthRoleChoice =
-    searchParams.get("role") === enmRole.admin
-      ? enmRole.admin
-      : enmRole.jobseeker;
-
-  const [selectedRole, setSelectedRole] = useState<AuthRoleChoice>(initialRole);
+  const { selectedRole, setSelectedRole } = useAuthRoleFromUrl();
   const [roleMismatchError, setRoleMismatchError] = useState<string | null>(
     null,
   );

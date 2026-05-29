@@ -3,20 +3,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, RegisterFormValues } from "./registerSchema";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useRegister } from "@/lib/hooks/useAuth";
+import { useAuthRoleFromUrl } from "@/lib/hooks/useAuthRoleFromUrl";
 import { enmRole } from "@/content/enums";
-import { useState } from "react";
 import AuthRoleTabs from "@/component/auth/AuthRoleTabs";
-import { AuthRoleChoice } from "@/content/demoAccounts";
 function RegisterForm() {
-  const searchParams = useSearchParams();
-  const initialRole: AuthRoleChoice =
-    searchParams.get("role") === enmRole.admin
-      ? enmRole.admin
-      : enmRole.jobseeker;
-
-  const [selectedRole, setSelectedRole] = useState<AuthRoleChoice>(initialRole);
+  const { selectedRole, setSelectedRole } = useAuthRoleFromUrl();
 
   const {
     register,
