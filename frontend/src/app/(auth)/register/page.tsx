@@ -5,11 +5,22 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, RegisterFormValues } from "./registerSchema";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useRegister } from "@/lib/hooks/useAuth";
 import { enmRole } from "@/content/enums";
+import { useState } from "react";
+import AuthRoleTabs from "@/component/auth/AuthRoleTabs";
+import { AuthRoleChoice } from "@/content/demoAccounts";
 
 export default function RegisterPage() {
+  const searchParams = useSearchParams();
+  const initialRole: AuthRoleChoice =
+    searchParams.get("role") === enmRole.admin
+      ? enmRole.admin
+      : enmRole.jobseeker;
+
+  const [selectedRole, setSelectedRole] = useState<AuthRoleChoice>(initialRole);
+
   const {
     register,
     handleSubmit,
@@ -29,17 +40,13 @@ export default function RegisterPage() {
       });
 
       if (result.success && result.user) {
-        if (result.user.user_metadata.role === enmRole.admin) {
-          router.push("/dashboard");
-        } else {
-          router.push("/jobs");
-        }
+        router.push("/jobs");
       }
     } catch (err) {
-      // Handle error
-      console.error("Login Error:", err);
+      console.error("Register Error:", err);
     }
   };
+
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-md rounded-2xl bg-background shadow-lg p-8">
@@ -55,99 +62,125 @@ export default function RegisterPage() {
           Create an account
         </h1>
         <p className="text-sm text-content/80 text-center mt-1">
-          Get started with JobBoard today
+          Choose a role to get started with JobBoard
         </p>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4">
-          {/* Full Name */}
-          <div>
-            <label className="block text-sm font-medium text-content">
-              Full Name
-            </label>
-            <input
-              {...register("fullName")}
-              type="text"
-              placeholder="John Doe"
-              className={`mt-1 w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2
+        <AuthRoleTabs value={selectedRole} onChange={setSelectedRole} />
+
+        {selectedRole === enmRole.admin ? (
+          <div className="mt-6 space-y-4">
+            <div className="rounded-lg border border-amber-200 bg-amber-50/80 px-4 py-3 text-sm text-content">
+              <p className="font-medium text-amber-900">Admin access</p>
+              <p className="mt-1 text-xs text-content/90">
+                Admin accounts are not created via signup. Use the portfolio
+                demo on the sign-in page to explore the admin dashboard.
+              </p>
+            </div>
+            <Link
+              href="/login?role=admin"
+              className="block w-full rounded-lg bg-linear-to-r from-indigo-600 to-purple-600 py-2.5 text-center text-sm font-medium text-white hover:opacity-90 transition"
+            >
+              Go to Admin demo login
+            </Link>
+          </div>
+        ) : (
+          <>
+            <p className="mt-4 rounded-lg border border-indigo-100 bg-indigo-50/80 px-3 py-2 text-xs text-content">
+              Register as a job seeker to browse jobs and submit applications.
+            </p>
+
+            <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4">
+              {/* Full Name */}
+              <div>
+                <label className="block text-sm font-medium text-content">
+                  Full Name
+                </label>
+                <input
+                  {...register("fullName")}
+                  type="text"
+                  placeholder="John Doe"
+                  className={`mt-1 w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2
                 ${
                   errors.fullName
                     ? "border-red-500 focus:ring-red-500"
                     : "border-lightGray/50 focus:ring-indigo-500"
                 }`}
-            />
-            {errors.fullName && (
-              <p className="mt-1 text-xs text-red-500">
-                {errors.fullName.message}
-              </p>
-            )}
-          </div>
+                />
+                {errors.fullName && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.fullName.message}
+                  </p>
+                )}
+              </div>
 
-          {/* Email */}
-          <div>
-            <label className="block text-sm font-medium text-content">
-              Email
-            </label>
-            <input
-              {...register("email")}
-              type="email"
-              placeholder="you@example.com"
-              className={`mt-1 w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2
+              {/* Email */}
+              <div>
+                <label className="block text-sm font-medium text-content">
+                  Email
+                </label>
+                <input
+                  {...register("email")}
+                  type="email"
+                  placeholder="you@example.com"
+                  className={`mt-1 w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2
                 ${
                   errors.email
                     ? "border-red-500 focus:ring-red-500"
                     : "border-lightGray/50 focus:ring-indigo-500"
                 }`}
-            />
-            {errors.email && (
-              <p className="mt-1 text-xs text-red-500">
-                {errors.email.message}
-              </p>
-            )}
-          </div>
+                />
+                {errors.email && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.email.message}
+                  </p>
+                )}
+              </div>
 
-          {/* Password */}
-          <div>
-            <label className="block text-sm font-medium text-content">
-              Password
-            </label>
-            <input
-              {...register("password")}
-              type="password"
-              placeholder="••••••••"
-              className={`mt-1 w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2
+              {/* Password */}
+              <div>
+                <label className="block text-sm font-medium text-content">
+                  Password
+                </label>
+                <input
+                  {...register("password")}
+                  type="password"
+                  placeholder="••••••••"
+                  className={`mt-1 w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2
                 ${
                   errors.password
                     ? "border-red-500 focus:ring-red-500"
                     : "border-lightGray/50 focus:ring-indigo-500"
                 }`}
-            />
-            {errors.password && (
-              <p className="mt-1 text-xs text-red-500">
-                {errors.password.message}
+                />
+                {errors.password && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.password.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Submit */}
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="mt-4 w-full rounded-lg bg-linear-to-r from-indigo-600 to-purple-600 py-2.5 text-sm font-medium text-white hover:opacity-90 transition disabled:opacity-60"
+              >
+                {isSubmitting ? "Creating..." : "Create Job Seeker account"}
+              </button>
+            </form>
+            {error && (
+              <p className="text-red-500 text-sm my-4 text-center">
+                {error.message}
               </p>
             )}
-          </div>
-
-          {/* Submit */}
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="mt-4 w-full rounded-lg bg-linear-to-r from-indigo-600 to-purple-600 py-2.5 text-sm font-medium text-white hover:opacity-90 transition disabled:opacity-60"
-          >
-            {isSubmitting ? "Creating..." : "Create account"}
-          </button>
-        </form>
-        {error && (
-          <p className="text-red-500 text-sm my-4 text-center">
-            {error.message}
-          </p>
+          </>
         )}
+
         {/* Footer */}
         <p className="mt-6 text-center text-sm text-content">
           Already have an account?{" "}
           <Link
-            href="/login"
+            href={`/login?role=${selectedRole}`}
             className="font-medium text-indigo-600 hover:underline"
           >
             Sign in
