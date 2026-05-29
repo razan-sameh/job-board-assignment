@@ -2,15 +2,13 @@
 
 ## Project Overview
 
-This is a simplified **Job Board Platform** built as part of a technical assignment for **WeTheMakers LLC**. The platform allows two types of users:
+This is a simplified **Job Board Platform**. The platform allows two types of users:
 
 - **Admin**: Can manage job postings and review all applications.
 - **Job Seeker**: Can register, log in, view jobs, and apply.
 
 For security and realism, user registration is restricted to **job seekers only**. The admin account is pre-created:
 
-Email: razan.dev24@gmail.com
-Password: 12345678
 
 
 ---
@@ -56,40 +54,3 @@ Password: 12345678
 - Basic responsive design for mobile
 - Dark Mode toggle implemented for mobile
 
-> **Note:** The mobile app is not fully completed; only the core job seeker functionalities are implemented so far.
-
-
----
-
-## Setup Instructions
-
-### Frontend (Next.js)
-
-1. Clone the repository:  
-   ```bash
-   git clone <repo_url>
-   cd job-board-assignment/frontend
-2. Install dependencies:
-   ```bash
-   npm install
-3. Create .env and add your Supabase credentials:
-   ```bash
-   NEXT_PUBLIC_SUPABASE_KEY=sb_publishable_mdMFjfXu8QXyzVKZ4QXv2w_tnf_7mmn
-   NEXT_PUBLIC_SUPABASE_API=https://wxnradqtzkqzsxtuufbj.supabase.co
-4. Run the development server:
-   ```bash
-   npm run dev
-
-### Mobile App (Expo)
-1. Navigate to the mobile folder:
-   ```bash
-   cd job-board-assignment/mobile
-2. Install dependencies:
-   ```bash
-   npm install
-
-3. Run the app with Expo:
-   ```bash
-   npx expo start -c
-
-**Note:** Make sure to configure Supabase keys in the mobile app .env file.
